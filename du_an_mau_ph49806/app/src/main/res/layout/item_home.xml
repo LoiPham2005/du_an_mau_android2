@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp">
+
+    <TextView
+        android:id="@+id/tvMaPhieu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/tvTinhTrang"
+        android:text="Mã phiếu"/>
+
+    <TextView
+        android:id="@+id/tvThanhVien"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvMaPhieu"
+        android:layout_toLeftOf="@id/tvTinhTrang"
+        android:text="Thành viên"/>
+
+    <TextView
+        android:id="@+id/tvTenSach"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvThanhVien"
+        android:layout_toLeftOf="@id/tvTinhTrang"
+        android:text="Tên sách"/>
+
+    <TextView
+        android:id="@+id/tvTienThue_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvTenSach"
+        android:layout_toLeftOf="@id/tvTinhTrang"
+        android:text="tiền thuê"/>
+
+    <TextView
+        android:id="@+id/tvTinhTrang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/imgDelete"
+        android:layout_marginTop="30dp"
+        android:text="Tình trạng"/>
+
+    <TextView
+        android:id="@+id/tvNgayThue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/imgDelete"
+        android:layout_below="@id/tvTinhTrang"
+        android:layout_marginTop="5dp"
+        android:text="Ngày Thuê"/>
+
+    <ImageView
+        android:id="@+id/imgDelete"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="80dp"
+        android:src="@drawable/delete" />
+</RelativeLayout>
