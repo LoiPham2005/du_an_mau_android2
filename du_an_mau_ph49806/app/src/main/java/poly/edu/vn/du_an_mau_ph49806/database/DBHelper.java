@@ -46,8 +46,8 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(createTableLoaiSach);
 
         String insertLoaiSach = "INSERT INTO LoaiSach (tenLoai) values " +
-                "('java')," +
-                "('c++')";
+                "('cntt')," +
+                "('marketing')";
         db.execSQL(insertLoaiSach);
 
 // Tạo bảng Sach

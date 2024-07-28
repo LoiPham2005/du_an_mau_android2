@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Mã Phiếu Mượn"
-        android:inputType="text"
+        android:inputType="none"
         android:layout_marginBottom="10dp"/>
 
     <Spinner
@@ -30,7 +30,7 @@
         android:id="@+id/tvNgayThue_add"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Ngày:"
+        android:hint="Ngày: "
         android:layout_marginBottom="10dp"/>
 
     <TextView

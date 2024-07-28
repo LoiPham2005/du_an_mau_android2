@@ -11,6 +11,19 @@ public class PhieuMuon {
     private String ngay;
     private int traSach;
 
+    public PhieuMuon(String maTT, int maTV, int maSach, int tienThue, String ngay, int traSach) {
+        this.maTT = maTT;
+        this.maTV = maTV;
+        this.maSach = maSach;
+        this.tienThue = tienThue;
+        this.ngay = ngay;
+        this.traSach = traSach;
+    }
+
+    public PhieuMuon() {
+
+    }
+
     // Getters and Setters
     public int getMaPM() {
         return maPM;

@@ -48,9 +48,10 @@ public class SachAdapter extends BaseAdapter {
         View view = null;
         if (view != null) {
             view = convertView;
+        }else {
+            view = LayoutInflater.from(context).inflate(R.layout.item_list_sach, null);
         }
-        view = LayoutInflater.from(context).inflate(R.layout.item_list_sach, null);
-
+        
         TextView tvMaSach = view.findViewById(R.id.tvMaSach);
         TextView tvTenSach = view.findViewById(R.id.tvTenSach1);
         TextView tvGia = view.findViewById(R.id.tvGiaSach);
@@ -61,7 +62,11 @@ public class SachAdapter extends BaseAdapter {
         tvMaSach.setText("Mã Sách: "+sach.getMaSach() + "");
         tvTenSach.setText("Tên Sách: "+sach.getTenSach());
         tvGia.setText("Giá Sách: "+sach.getGiaThue() + "");
+
+        // cách1 gán lấy mã loại sách và truyền nó nào hàm getLoaiSachName
         tvLoaiSach.setText("Loại Sách: " + getLoaiSachName(sach.getMaLoai()));
+        // cách 2 ko cần tạo hàm ngoài
+//        tvLoaiSach.setText("Loại Sách: " + dao.getLoaiSachName(sach.getMaLoai()));
 
         imgDel.setOnClickListener(v -> {
             new AlertDialog.Builder(context)

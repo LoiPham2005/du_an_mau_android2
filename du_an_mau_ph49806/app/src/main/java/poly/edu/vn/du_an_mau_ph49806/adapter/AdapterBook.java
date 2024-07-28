@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import poly.edu.vn.du_an_mau_ph49806.DAO.BookDAO;
 import poly.edu.vn.du_an_mau_ph49806.R;
 import poly.edu.vn.du_an_mau_ph49806.model.Books;
+import poly.edu.vn.du_an_mau_ph49806.screen_main.HomeFragment;
 
 public class AdapterBook extends RecyclerView.Adapter<AdapterBook.BookViewHoder>{
     Context context;
@@ -33,7 +34,7 @@ public class AdapterBook extends RecyclerView.Adapter<AdapterBook.BookViewHoder>
 //        this.context = context;
 //        this.listBook = listBook;
 //    }
-
+HomeFragment fragment;
 
     public AdapterBook(Context context, ArrayList<Books> listBook, OnDeleteClickListener deleteClickListener) {
         this.context = context;
@@ -161,7 +162,7 @@ public class AdapterBook extends RecyclerView.Adapter<AdapterBook.BookViewHoder>
             tvTienThue = itemView.findViewById(R.id.tvTienThue_add);
             tvTinhTrang = itemView.findViewById(R.id.tvTinhTrang);
             tvNgayThue = itemView.findViewById(R.id.tvNgayThue);
-            imgDelete = itemView.findViewById(R.id.imgDelete);
+//            imgDelete = itemView.findViewById(R.id.imgDelete);
 
         }
     }

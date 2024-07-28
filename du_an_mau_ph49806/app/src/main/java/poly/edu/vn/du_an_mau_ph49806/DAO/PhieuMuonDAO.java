@@ -1,10 +1,9 @@
 package poly.edu.vn.du_an_mau_ph49806.DAO;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,14 +29,14 @@ public class PhieuMuonDAO {
     }
 
     // Insert
-    public long insertPhieuMuon(String maTT, int maTV, int maSach, int tienThue, String ngay, int traSach) {
+    public long insertPhieuMuon(PhieuMuon phieuMuon) {
         ContentValues values = new ContentValues();
-        values.put(COLUMN_MATT, maTT);
-        values.put(COLUMN_MATV, maTV);
-        values.put(COLUMN_MASACH, maSach);
-        values.put(COLUMN_TIENTHUE, tienThue);
-        values.put(COLUMN_NGAY, ngay);
-        values.put(COLUMN_TRASACH, traSach);
+        values.put(COLUMN_MATT, phieuMuon.getMaTT());
+        values.put(COLUMN_MATV, phieuMuon.getMaTV());
+        values.put(COLUMN_MASACH, phieuMuon.getMaSach());
+        values.put(COLUMN_TIENTHUE, phieuMuon.getTienThue());
+        values.put(COLUMN_NGAY, phieuMuon.getNgay());
+        values.put(COLUMN_TRASACH, phieuMuon.getTraSach());
         return db.insert(TABLE_NAME, null, values);
     }
 
@@ -97,5 +96,98 @@ public class PhieuMuonDAO {
         }
         cursor.close();
         return phieuMuon;
+    }
+
+    public List<String> getAllThanhVien() {
+        List<String> list = new ArrayList<>();
+        db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT hoTen FROM ThanhVien", null);
+        if (cursor.moveToFirst()) {
+            do {
+                list.add(cursor.getString(cursor.getColumnIndexOrThrow("hoTen")));
+            } while (cursor.moveToNext());
+        }
+        return list;
+    }
+
+    public List<String> getAllSach() {
+        List<String> list = new ArrayList<>();
+        db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT tenSach FROM Sach", null);
+        if (cursor.moveToFirst()) {
+            do {
+                list.add(cursor.getString(cursor.getColumnIndexOrThrow("tenSach")));
+
+            } while (cursor.moveToNext());
+        }
+        return list;
+    }
+
+    public int getThanhVienByName(String thanhVien) {
+        int idThanhVien = -1;
+        db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT maTV FROM ThanhVien WHERE hoTen=?", new String[]{thanhVien});
+        if (cursor.moveToFirst()) {
+            idThanhVien = cursor.getInt(0);
+        }
+        cursor.close();
+        return idThanhVien;
+    }
+
+    public int getSachByName(String tenSach) {
+        int idSach = -1;
+        db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT maSach FROM Sach WHERE tenSach=?", new String[]{tenSach});
+        if (cursor.moveToFirst()) {
+            idSach = cursor.getInt(0);
+        }
+        cursor.close();
+        return idSach;
+    }
+
+    public int getSachPriceByName(String tenSach) {
+        int giaThue = -1; // Giá mặc định nếu không tìm thấy sách
+        db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT giaThue FROM Sach WHERE tenSach=?", new String[]{tenSach});
+        if (cursor.moveToFirst()) {
+            giaThue = cursor.getInt(cursor.getColumnIndexOrThrow("giaThue"));
+        }
+        cursor.close();
+        return giaThue;
+    }
+
+    public int getSachPriceById(int maSach) {
+        int giaThue = -1; // Giá mặc định nếu không tìm thấy sách
+        db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT giaThue FROM Sach WHERE maSach=?", new String[]{String.valueOf(maSach)});
+        if (cursor.moveToFirst()) {
+            giaThue = cursor.getInt(cursor.getColumnIndexOrThrow("giaThue"));
+        }
+        cursor.close();
+        return giaThue;
+    }
+
+    public String getThanhvienByName(int maTV) {
+        String thanhVien = "";
+        db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT hoTen FROM ThanhVien WHERE maTV=?", new String[]{String.valueOf(maTV)});
+        if (cursor.moveToNext()){
+            thanhVien = cursor.getString(0);
+        }
+        cursor.close();
+
+        return thanhVien;
+    }
+
+    public String getTenSachByName(int maSach) {
+        String tenSach = "";
+        db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT tenSach FROM Sach  WHERE maSach=?", new String[]{String.valueOf(maSach)});
+        if (cursor.moveToNext()){
+            tenSach = cursor.getString(0);
+        }
+        cursor.close();
+
+        return tenSach;
     }
 }

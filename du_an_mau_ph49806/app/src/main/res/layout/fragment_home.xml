@@ -6,11 +6,10 @@
     android:layout_margin="10dp"
     tools:context=".screen_main.HomeFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <ListView
+        android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+        android:layout_height="wrap_content"/>
 
     <ImageView
         android:id="@+id/imgAdd"
