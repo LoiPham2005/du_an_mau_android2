@@ -12,9 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Du_an_mau_ph49806"
         tools:targetApi="31">
-        <activity
-            android:name=".MainActivityCu"
-            android:exported="false" />
+
         <activity
             android:name=".Login.LoginActivity"
             android:exported="false" />

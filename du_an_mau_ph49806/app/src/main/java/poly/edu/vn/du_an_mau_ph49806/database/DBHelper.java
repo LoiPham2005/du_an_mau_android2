@@ -72,20 +72,6 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(createTablePhieuMuon);
 
 
-        String createSach = "CREATE TABLE BOOK (" +
-                "maPhieu INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "thanhVien TEXT," +
-                "tenSach TEXT," +
-                "tienThue TEXT," +
-                "tinhTrang TEXT," +
-                "ngayThue TEXT" +
-                ");";
-        db.execSQL(createSach);
-
-        String insertSach = "INSERT INTO BOOK ( thanhVien, tenSach, tienThue, tinhTrang, ngayThue) values " +
-                "('lê văn hải', 'java2', '2009', 'đã trả sách', '2/7/2022' )," +
-                "('lê văn hải2', 'java3', '2005', 'đã trả sách', '2/7/2024' )";
-        db.execSQL(insertSach);
     }
 
     @Override
@@ -101,7 +87,6 @@ public class DBHelper extends SQLiteOpenHelper {
         // Xóa bảng PhieuMuon
         db.execSQL("DROP TABLE IF EXISTS PhieuMuon");
 
-        db.execSQL("DROP TABLE IF EXISTS BOOK");
 
         onCreate(db);
     }
