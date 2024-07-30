@@ -16,16 +16,19 @@ import java.util.ArrayList;
 import poly.edu.vn.du_an_mau_ph49806.DAO.PhieuMuonDAO;
 import poly.edu.vn.du_an_mau_ph49806.R;
 import poly.edu.vn.du_an_mau_ph49806.model.PhieuMuon;
+import poly.edu.vn.du_an_mau_ph49806.screen_main.HomeFragment;
 
 public class PhieuMuonAdapter extends BaseAdapter {
     Context context;
     ArrayList<PhieuMuon> list;
     PhieuMuonDAO dao;
+//    HomeFragment fragment;
 
     public PhieuMuonAdapter(Context context, ArrayList<PhieuMuon> list) {
         this.context = context;
         this.list = list;
         dao = new PhieuMuonDAO(context);
+//        fragment = HomeFragment.newInstance();
     }
 
     @Override
@@ -103,6 +106,14 @@ public class PhieuMuonAdapter extends BaseAdapter {
                     .setNegativeButton("Không", null)
                     .create().show();
         });
+
+
+//        view.setOnLongClickListener(v -> {
+//            fragment.UpdatePhieuMuon( position);
+//            return true;
+//        });
+
+
         return view;
     }
 }

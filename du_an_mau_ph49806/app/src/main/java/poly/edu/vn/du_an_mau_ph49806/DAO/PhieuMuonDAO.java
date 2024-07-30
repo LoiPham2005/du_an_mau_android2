@@ -41,15 +41,15 @@ public class PhieuMuonDAO {
     }
 
     // Update
-    public int updatePhieuMuon(int maPM, String maTT, int maTV, int maSach, int tienThue, String ngay, int traSach) {
+    public int updatePhieuMuon(PhieuMuon phieuMuon) {
         ContentValues values = new ContentValues();
-        values.put(COLUMN_MATT, maTT);
-        values.put(COLUMN_MATV, maTV);
-        values.put(COLUMN_MASACH, maSach);
-        values.put(COLUMN_TIENTHUE, tienThue);
-        values.put(COLUMN_NGAY, ngay);
-        values.put(COLUMN_TRASACH, traSach);
-        return db.update(TABLE_NAME, values, COLUMN_ID + " = ?", new String[]{String.valueOf(maPM)});
+        values.put(COLUMN_MATT, phieuMuon.getMaTT());
+        values.put(COLUMN_MATV, phieuMuon.getMaTV());
+        values.put(COLUMN_MASACH, phieuMuon.getMaSach());
+        values.put(COLUMN_TIENTHUE, phieuMuon.getTienThue());
+        values.put(COLUMN_NGAY, phieuMuon.getNgay());
+        values.put(COLUMN_TRASACH, phieuMuon.getTraSach());
+        return db.update(TABLE_NAME, values, COLUMN_ID + " = ?", new String[]{String.valueOf(phieuMuon.getMaPM())});
     }
 
     // Delete

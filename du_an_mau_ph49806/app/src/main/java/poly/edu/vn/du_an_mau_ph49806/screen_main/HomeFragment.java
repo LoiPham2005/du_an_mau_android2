@@ -23,7 +23,6 @@ import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -67,6 +66,12 @@ public class HomeFragment extends Fragment {
         listView.setAdapter(adapter);
 
         imgAdd.setOnClickListener(v -> addBook());
+
+        listView.setOnItemLongClickListener((parent, view1, position, id) -> {
+            PhieuMuon phieuMuon = listPhieuMuon.get(position);
+            UpdatePhieuMuon(position);
+            return true;
+        });
 
         return view;
     }
@@ -147,4 +152,128 @@ public class HomeFragment extends Fragment {
         btnHuy.setOnClickListener(v -> dialog.dismiss());
         dialog.show();
     }
+
+    //    public void UpdatePhieuMuon( int position) {
+//        View view = LayoutInflater.from(getContext()).inflate(R.layout.iteam_update_home, null);
+//        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+//        builder.setView(view);
+//
+//        Button btnLuu = view.findViewById(R.id.btnLuu_update);
+//        Button btnHuy = view.findViewById(R.id.btnHuy_update);
+//        Spinner spThanhVien = view.findViewById(R.id.spThanhVien_update);
+//        Spinner spSach = view.findViewById(R.id.spTenSach_update);
+//        TextView tvTienThue = view.findViewById(R.id.tvTienThue_update);
+//        CheckBox cbkTinhTrang = view.findViewById(R.id.cbkTinhTrang_update);
+//
+////        // Đặt adapter cho Spinner
+////        List<String> listThanhVien = phieuMuonDAO.getAllThanhVien();
+////        ArrayAdapter<String> adapterThanhVien = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, listThanhVien);
+////        adapterThanhVien.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+////        spThanhVien.setAdapter(adapterThanhVien);
+////
+////        List<String> listSach = phieuMuonDAO.getAllSach();
+////        ArrayAdapter<String> adapterSach = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, listSach);
+////        adapterSach.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+////        spSach.setAdapter(adapterSach);
+////
+////        PhieuMuon phieuMuon = listPhieuMuon.get(position);
+////
+////        spThanhVien.setSelection(phieuMuon.getMaTV());
+////        spSach.setSelection(phieuMuon.getMaSach());
+////        tvTienThue.setText(String.valueOf(phieuMuon.getTienThue()));
+////        cbkTinhTrang.setChecked(phieuMuon.getTraSach() == 1);
+//
+//
+//        AlertDialog dialog = builder.create();
+//
+//        dialog.show();
+//    }
+    public void UpdatePhieuMuon(int position) {
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.iteam_update_home, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setView(view);
+
+        EditText edtMaPM = view.findViewById(R.id.edtMaphieu_update);
+        Button btnLuu = view.findViewById(R.id.btnLuu_update);
+        Button btnHuy = view.findViewById(R.id.btnHuy_update);
+        Spinner spThanhVien = view.findViewById(R.id.spThanhVien_update);
+        Spinner spSach = view.findViewById(R.id.spTenSach_update);
+        TextView tvNgayThue = view.findViewById(R.id.tvNgayThue_update);
+        TextView tvTienThue = view.findViewById(R.id.tvTienThue_update);
+        CheckBox cbkTinhTrang = view.findViewById(R.id.cbkTinhTrang_update);
+
+        // Đặt adapter cho Spinner
+        List<String> listThanhVien = phieuMuonDAO.getAllThanhVien();
+        ArrayAdapter<String> adapterThanhVien = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, listThanhVien);
+        adapterThanhVien.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spThanhVien.setAdapter(adapterThanhVien);
+
+        List<String> listSach = phieuMuonDAO.getAllSach();
+        ArrayAdapter<String> adapterSach = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, listSach);
+        adapterSach.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spSach.setAdapter(adapterSach);
+
+        PhieuMuon phieuMuon = listPhieuMuon.get(position);
+
+        edtMaPM.setText(phieuMuon.getMaPM()+"");
+        spThanhVien.setSelection(listThanhVien.indexOf(phieuMuonDAO.getThanhvienByName(phieuMuon.getMaTV())));
+        spSach.setSelection(listSach.indexOf(phieuMuonDAO.getTenSachByName(phieuMuon.getMaSach())));
+        tvNgayThue.setText(phieuMuon.getNgay());
+        tvTienThue.setText(String.valueOf(phieuMuon.getTienThue()));
+        cbkTinhTrang.setChecked(phieuMuon.getTraSach() == 1);
+
+        AlertDialog dialog = builder.create();
+
+        spSach.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String tenSach = spSach.getSelectedItem().toString();
+                tienThue = phieuMuonDAO.getSachPriceByName(tenSach);
+                tvTienThue.setText(String.valueOf(tienThue));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Do nothing
+            }
+        });
+
+        btnLuu.setOnClickListener(v -> {
+            String thanhVien = spThanhVien.getSelectedItem().toString();
+            int maThanhVien = phieuMuonDAO.getThanhVienByName(thanhVien);
+
+            String tenSach = spSach.getSelectedItem().toString();
+            int tienThue = phieuMuonDAO.getSachPriceByName(tenSach);
+            int maSach = phieuMuonDAO.getSachByName(tenSach);
+            int tinhTrang = cbkTinhTrang.isChecked() ? 1 : 0;
+
+//            Date date = new Date();
+//            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+//            String ngayThue = dateFormat.format(date);
+
+            PhieuMuon updatedPhieuMuon = new PhieuMuon();
+            updatedPhieuMuon.setMaPM(phieuMuon.getMaPM());
+            updatedPhieuMuon.setMaTT(thanhVien);
+            updatedPhieuMuon.setMaTV(maThanhVien);
+            updatedPhieuMuon.setMaSach(maSach);
+            updatedPhieuMuon.setTienThue(tienThue);
+            updatedPhieuMuon.setNgay(phieuMuon.getNgay());
+            updatedPhieuMuon.setTraSach(tinhTrang);
+
+            long result = phieuMuonDAO.updatePhieuMuon(updatedPhieuMuon);
+
+            if (result > 0) {
+                Toast.makeText(getContext(), "Cập nhật phiếu mượn thành công", Toast.LENGTH_SHORT).show();
+                listPhieuMuon.set(position, updatedPhieuMuon);
+                adapter.notifyDataSetChanged();
+            } else {
+                Toast.makeText(getContext(), "Cập nhật phiếu mượn thất bại", Toast.LENGTH_SHORT).show();
+            }
+            dialog.dismiss();
+        });
+
+        btnHuy.setOnClickListener(v -> dialog.dismiss());
+        dialog.show();
+    }
+
 }
