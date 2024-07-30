@@ -39,6 +39,7 @@ public class HomeFragment extends Fragment {
     PhieuMuonDAO phieuMuonDAO;
     PhieuMuonAdapter adapter;
     int tienThue;
+    TextView tvTienThue;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -85,8 +86,10 @@ public class HomeFragment extends Fragment {
         Button btnHuy = view.findViewById(R.id.btnHuy);
         Spinner spThanhVien = view.findViewById(R.id.spThanhVien);
         Spinner spSach = view.findViewById(R.id.spTenSach);
-        TextView tvTienThue = view.findViewById(R.id.tvTienThue_add);
+        tvTienThue = view.findViewById(R.id.tvTienThue_add);
+        TextView tvNgayThue = view.findViewById(R.id.tvNgayThue_add);
         CheckBox cbkTinhTrang = view.findViewById(R.id.cbkTinhTrang);
+
 
         // Đặt adapter cho Spinner
         List<String> listThanhVien = phieuMuonDAO.getAllThanhVien();
@@ -101,12 +104,13 @@ public class HomeFragment extends Fragment {
 
         AlertDialog dialog = builder.create();
 
+
         spSach.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                String tenSach = spSach.getSelectedItem().toString();
-//                tienThue = phieuMuonDAO.getSachPriceByName(tenSach);
-//                tvTienThue.setText(String.valueOf(tienThue));
+                String tenSach = spSach.getSelectedItem().toString();
+                int tienThue = phieuMuonDAO.getSachPriceByName(tenSach);
+                tvTienThue.setText(String.valueOf(tienThue));
             }
 
             @Override
@@ -114,6 +118,12 @@ public class HomeFragment extends Fragment {
                 // Do nothing
             }
         });
+
+        // Lấy ngày hiện tại
+        Date date = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String ngay = dateFormat.format(date);
+        tvNgayThue.setText(ngay);
 
         btnLuu.setOnClickListener(v -> {
             String thanhVien = spThanhVien.getSelectedItem().toString();
@@ -124,16 +134,12 @@ public class HomeFragment extends Fragment {
             int maSach = phieuMuonDAO.getSachByName(tenSach);
             int tinhTrang = cbkTinhTrang.isChecked() ? 1 : 0;
 
-            Date date = new Date();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            String ngay = dateFormat.format(date);
-
             PhieuMuon phieuMuon = new PhieuMuon();
             phieuMuon.setMaTT(thanhVien);
             phieuMuon.setMaTV(maThanhVien);
             phieuMuon.setMaSach(maSach);
             phieuMuon.setTienThue(tienThue);
-            phieuMuon.setNgay(ngay);
+            phieuMuon.setNgay(ngay);  // có thể viết tắt dateFormat.format(new Date())
             phieuMuon.setTraSach(tinhTrang);
 
             long result = phieuMuonDAO.insertPhieuMuon(phieuMuon);
@@ -153,41 +159,6 @@ public class HomeFragment extends Fragment {
         dialog.show();
     }
 
-    //    public void UpdatePhieuMuon( int position) {
-//        View view = LayoutInflater.from(getContext()).inflate(R.layout.iteam_update_home, null);
-//        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-//        builder.setView(view);
-//
-//        Button btnLuu = view.findViewById(R.id.btnLuu_update);
-//        Button btnHuy = view.findViewById(R.id.btnHuy_update);
-//        Spinner spThanhVien = view.findViewById(R.id.spThanhVien_update);
-//        Spinner spSach = view.findViewById(R.id.spTenSach_update);
-//        TextView tvTienThue = view.findViewById(R.id.tvTienThue_update);
-//        CheckBox cbkTinhTrang = view.findViewById(R.id.cbkTinhTrang_update);
-//
-////        // Đặt adapter cho Spinner
-////        List<String> listThanhVien = phieuMuonDAO.getAllThanhVien();
-////        ArrayAdapter<String> adapterThanhVien = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, listThanhVien);
-////        adapterThanhVien.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-////        spThanhVien.setAdapter(adapterThanhVien);
-////
-////        List<String> listSach = phieuMuonDAO.getAllSach();
-////        ArrayAdapter<String> adapterSach = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, listSach);
-////        adapterSach.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-////        spSach.setAdapter(adapterSach);
-////
-////        PhieuMuon phieuMuon = listPhieuMuon.get(position);
-////
-////        spThanhVien.setSelection(phieuMuon.getMaTV());
-////        spSach.setSelection(phieuMuon.getMaSach());
-////        tvTienThue.setText(String.valueOf(phieuMuon.getTienThue()));
-////        cbkTinhTrang.setChecked(phieuMuon.getTraSach() == 1);
-//
-//
-//        AlertDialog dialog = builder.create();
-//
-//        dialog.show();
-//    }
     public void UpdatePhieuMuon(int position) {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.iteam_update_home, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -215,7 +186,7 @@ public class HomeFragment extends Fragment {
 
         PhieuMuon phieuMuon = listPhieuMuon.get(position);
 
-        edtMaPM.setText(phieuMuon.getMaPM()+"");
+        edtMaPM.setText(phieuMuon.getMaPM() + "");
         spThanhVien.setSelection(listThanhVien.indexOf(phieuMuonDAO.getThanhvienByName(phieuMuon.getMaTV())));
         spSach.setSelection(listSach.indexOf(phieuMuonDAO.getTenSachByName(phieuMuon.getMaSach())));
         tvNgayThue.setText(phieuMuon.getNgay());

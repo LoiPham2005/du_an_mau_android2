@@ -35,11 +35,12 @@ public class ThuThuDAO {
     }
 
     // Update
-    public int updateThuThu(String maTT, String hoTen, String matKhau) {
+    public boolean updateThuThu(ThuThu thuThu) {
         ContentValues values = new ContentValues();
-        values.put(COLUMN_HOTEN, hoTen);
-        values.put(COLUMN_MATKHAU, matKhau);
-        return db.update(TABLE_NAME, values, COLUMN_ID + " = ?", new String[]{maTT});
+        values.put(COLUMN_HOTEN, thuThu.getHoTen());
+        values.put(COLUMN_MATKHAU, thuThu.getMatKhau());
+        long check = db.update(TABLE_NAME, values, COLUMN_ID + " = ?", new String[]{thuThu.getMaTT()});
+        return check >0;
     }
 
     // Delete

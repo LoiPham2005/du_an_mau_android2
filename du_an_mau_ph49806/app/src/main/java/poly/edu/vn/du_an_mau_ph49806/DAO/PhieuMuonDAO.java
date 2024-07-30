@@ -10,6 +10,7 @@ import java.util.List;
 
 import poly.edu.vn.du_an_mau_ph49806.database.DBHelper;
 import poly.edu.vn.du_an_mau_ph49806.model.PhieuMuon;
+import poly.edu.vn.du_an_mau_ph49806.model.Top10;
 
 public class PhieuMuonDAO {
     private SQLiteDatabase db;
@@ -116,7 +117,8 @@ public class PhieuMuonDAO {
         Cursor cursor = db.rawQuery("SELECT tenSach FROM Sach", null);
         if (cursor.moveToFirst()) {
             do {
-                list.add(cursor.getString(cursor.getColumnIndexOrThrow("tenSach")));
+//                list.add(cursor.getString(cursor.getColumnIndexOrThrow("tenSach")));
+                list.add(cursor.getString(0));
 
             } while (cursor.moveToNext());
         }
@@ -190,4 +192,68 @@ public class PhieuMuonDAO {
 
         return tenSach;
     }
+
+    // top 10 doanh thu cao nhất
+    public ArrayList<PhieuMuon> getTop10PhieuMuonByDoanhThu() {
+        ArrayList<PhieuMuon> list = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + TABLE_NAME + " ORDER BY " + COLUMN_TIENTHUE + " DESC LIMIT 10";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                PhieuMuon phieuMuon = new PhieuMuon();
+                phieuMuon.setMaPM(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID)));
+                phieuMuon.setMaTT(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_MATT)));
+                phieuMuon.setMaTV(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_MATV)));
+                phieuMuon.setMaSach(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_MASACH)));
+                phieuMuon.setTienThue(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_TIENTHUE)));
+                phieuMuon.setNgay(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NGAY)));
+                phieuMuon.setTraSach(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_TRASACH)));
+                list.add(phieuMuon);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return list;
+    }
+
+    // top 10 sách mượn nhiều nhất
+    public ArrayList<Top10> getTop10SachMuonNhieuNhat() {
+        ArrayList<Top10> list = new ArrayList<>();
+        String selectQuery = "SELECT tenSach, COUNT(*) as soLanMuon " +
+                "FROM PhieuMuon pm " +
+                "INNER JOIN Sach s ON pm.maSach = s.maSach " +
+                "GROUP BY pm.maSach " +
+                "ORDER BY soLanMuon DESC " +
+                "LIMIT 10";
+//
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                String tenSach = cursor.getString(cursor.getColumnIndexOrThrow("tenSach"));
+                int soLanMuon = cursor.getInt(cursor.getColumnIndexOrThrow("soLanMuon"));
+                list.add(new Top10(tenSach, soLanMuon));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return list;
+    }
+
+
+    public String getDoanhThu(String tuNgay, String denNgay) {
+        String doanhThu = "0"; // Giá trị mặc định nếu không có dữ liệu
+        db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT SUM(" + COLUMN_TIENTHUE + ") as doanhThu " +
+                "FROM " + TABLE_NAME + " " +
+                "WHERE " + COLUMN_NGAY + " BETWEEN ? AND ?";
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{tuNgay, denNgay});
+        if (cursor.moveToFirst()) {
+            doanhThu = cursor.getString(cursor.getColumnIndexOrThrow("doanhThu"));
+            if (doanhThu == null) {
+                doanhThu = "0";
+            }
+        }
+        cursor.close();
+        return doanhThu;
+    }
+
+
 }

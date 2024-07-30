@@ -93,4 +93,5 @@ public class LoginActivity extends AppCompatActivity {
         // lưu lại toàn bộ dữ liệu
         editor.commit();
     }
+
 }

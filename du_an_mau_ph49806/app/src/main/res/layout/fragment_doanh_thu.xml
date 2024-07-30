@@ -1,14 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
     tools:context=".screen_main.DoanhThuFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal"
+       android:layout_weight="3"
+       >
 
-</FrameLayout>
+       <Button
+           android:id="@+id/btnTuNgay"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:text="Từ ngày:"
+           />
+
+       <EditText
+           android:id="@+id/edTuNgay"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="2"
+           android:hint="YYYY/MM/Đ"
+           android:textSize="20dp"/>
+   </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="3"
+        >
+
+        <Button
+            android:id="@+id/btnDenNgay"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Đến ngày:"
+            />
+
+        <EditText
+            android:id="@+id/edDenNgay"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:hint="YYYY/MM/DD"
+            android:textSize="20dp"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnDoanhThu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:text="Doanh thu"
+        android:layout_marginTop="20dp"
+        />
+
+    <TextView
+        android:id="@+id/tvDoanhThu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30dp"
+        android:hint="Doanh thu"
+        android:layout_marginTop="20dp"
+        />
+</LinearLayout>

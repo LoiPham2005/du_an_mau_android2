@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -25,6 +26,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.navigation.NavigationView;
 
 import poly.edu.vn.du_an_mau_ph49806.DAO.ThuThuDAO;
+import poly.edu.vn.du_an_mau_ph49806.Login.LoginActivity;
 import poly.edu.vn.du_an_mau_ph49806.model.ThuThu;
 import poly.edu.vn.du_an_mau_ph49806.screen_main.DoanhThuFragment;
 import poly.edu.vn.du_an_mau_ph49806.screen_main.DoiMatKhauFragment;
@@ -116,10 +118,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         else if (id == R.id.nav_them_nguoi_dung) {
             toolbar.setTitle("thêm người dùng");
             fragment = ThemNguoiDungFragment.newInstance();
-        }else {
+        }else if (id == R.id.nav_doi_mat_khau) {
             toolbar.setTitle("Đổi mật khẩu");
             fragment = DoiMatKhauFragment.newInstance();
+        }else if (id == R.id.nav_dang_xuat) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Đăng xuất")
+                    .setMessage("Bạn có chắc chắn muốn đăng xuất không?")
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setPositiveButton("Có", (dialog, which) -> {
+                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish(); // Đóng MainActivity
+                    })
+                    .setNegativeButton("Không", null)
+                    .show();
+            return true;
         }
+
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.frameLayout, fragment).commit();
