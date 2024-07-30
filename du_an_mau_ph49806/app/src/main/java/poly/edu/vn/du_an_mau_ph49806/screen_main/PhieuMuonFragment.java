@@ -32,7 +32,7 @@ import poly.edu.vn.du_an_mau_ph49806.adapter.PhieuMuonAdapter;
 import poly.edu.vn.du_an_mau_ph49806.model.PhieuMuon;
 
 
-public class HomeFragment extends Fragment {
+public class PhieuMuonFragment extends Fragment {
     ArrayList<PhieuMuon> listPhieuMuon;
     ListView listView;
     ImageView imgAdd;
@@ -41,12 +41,12 @@ public class HomeFragment extends Fragment {
     int tienThue;
     TextView tvTienThue;
 
-    public HomeFragment() {
+    public PhieuMuonFragment() {
         // Required empty public constructor
     }
 
-    public static HomeFragment newInstance() {
-        return new HomeFragment();
+    public static PhieuMuonFragment newInstance() {
+        return new PhieuMuonFragment();
     }
 
     @Override
@@ -56,7 +56,7 @@ public class HomeFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_phieu_muon, container, false);
         listView = view.findViewById(R.id.listView);
         imgAdd = view.findViewById(R.id.imgAdd);
         phieuMuonDAO = new PhieuMuonDAO(getContext());

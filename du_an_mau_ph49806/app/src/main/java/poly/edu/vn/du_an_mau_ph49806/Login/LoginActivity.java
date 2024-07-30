@@ -34,6 +34,7 @@ public class LoginActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
         thuThuDAO = new ThuThuDAO(this);
         edtUsername = findViewById(R.id.user);
         edtPassword = findViewById(R.id.password);

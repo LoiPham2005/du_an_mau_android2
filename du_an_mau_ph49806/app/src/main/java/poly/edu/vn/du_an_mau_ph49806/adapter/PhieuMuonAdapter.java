@@ -16,19 +16,18 @@ import java.util.ArrayList;
 import poly.edu.vn.du_an_mau_ph49806.DAO.PhieuMuonDAO;
 import poly.edu.vn.du_an_mau_ph49806.R;
 import poly.edu.vn.du_an_mau_ph49806.model.PhieuMuon;
-import poly.edu.vn.du_an_mau_ph49806.screen_main.HomeFragment;
 
 public class PhieuMuonAdapter extends BaseAdapter {
     Context context;
     ArrayList<PhieuMuon> list;
     PhieuMuonDAO dao;
-//    HomeFragment fragment;
+
 
     public PhieuMuonAdapter(Context context, ArrayList<PhieuMuon> list) {
         this.context = context;
         this.list = list;
         dao = new PhieuMuonDAO(context);
-//        fragment = HomeFragment.newInstance();
+
     }
 
     @Override
@@ -55,8 +54,6 @@ public class PhieuMuonAdapter extends BaseAdapter {
             view = LayoutInflater.from(context).inflate(R.layout.item_home,null);
         }
 
-        PhieuMuon phieuMuon = list.get(position);
-
         TextView tvMaPhieu = view.findViewById(R.id.tvMaPhieu);
 //        TextView tvMaTT = view.findViewById(R.id.tvMaTT);
         TextView tvThanhVien = view.findViewById(R.id.tvThanhVien);
@@ -66,14 +63,7 @@ public class PhieuMuonAdapter extends BaseAdapter {
         TextView tvNgayThue = view.findViewById(R.id.tvNgayThue);
         ImageView imgDelete = view.findViewById(R.id.imgDeletePhieuMuon);
 
-//       PhieuMuon phieuMuon = dao.getPhieuMuonByID(phieuMuon2.getMaPM());
-//        tvMaPhieu.setText(phieuMuon.getMaPM());
-//        tvMaTT.setText(phieuMuon.getMaTT());
-//        tvThanhVien.setText(phieuMuon.getMaTV());
-//        tvTenSach.setText(phieuMuon.getMaSach());
-//        tvTienThue.setText(phieuMuon.getTienThue());
-//        tvTinhTrang.setText(phieuMuon.getTraSach());
-//        tvNgayThue.setText(phieuMuon.getNgay());
+        PhieuMuon phieuMuon = list.get(position);
 
         String thanhVien  = dao.getThanhvienByName(phieuMuon.getMaTV());
         String tinhTrang = phieuMuon.getTraSach() == 1 ? "Đã trả sách" : "Chưa trả sách";
@@ -107,11 +97,6 @@ public class PhieuMuonAdapter extends BaseAdapter {
                     .create().show();
         });
 
-
-//        view.setOnLongClickListener(v -> {
-//            fragment.UpdatePhieuMuon( position);
-//            return true;
-//        });
 
 
         return view;
