@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp">
+
+    <TextView
+        android:id="@+id/tvMaSach"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="mã"
+        android:layout_toLeftOf="@id/imgDeleteThanhVien"
+        android:textSize="20dp"/>
+
+    <TextView
+        android:id="@+id/tvTenSach1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvMaSach"
+        android:layout_toLeftOf="@id/imgDeleteThanhVien"
+        android:text="Tên sách"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/tvGiaSach"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvTenSach1"
+        android:layout_toLeftOf="@id/imgDeleteThanhVien"
+        android:text="Giá sách"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/tvLoaiSach"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvGiaSach"
+        android:layout_toLeftOf="@id/imgDeleteThanhVien"
+        android:text="Loại Sách"
+        android:textSize="20dp"/>
+
+    <ImageView
+        android:id="@+id/imgDeleteSach"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentEnd="true"
+        app:srcCompat="@drawable/delete"
+        android:layout_centerVertical="true"/>
+</RelativeLayout>
